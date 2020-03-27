@@ -128,8 +128,101 @@ public:
 	void sum() {
 		if (nam_1.size() != 0 || nam_2.size() != 0) {          //если вектора существуют
 			if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {    // если одно из чисел с минусом
+				
+				if (nam_1.size() == nam_2.size()) {
+					bool trriger = 0;
+					int target;
+					for (int i = nam_1.size() - 1; i >= 0; i--) {
+						if (nam_1[i] == nam_2[i]) {
+							if (i == 0) {
+								trriger = 1;
+								break;
+							}
+						}
+						else if (nam_1[i] > nam_2[i]) {
+							is_it_minus_end = 1;
+							target = i + 1;
+							break;
+						}
+						else if (nam_1[i] < nam_2[i]) {
+							target = i + 1;
+							break;
+						}
+					}
+					if (trriger == 1) {
+						nam_end.push_back(0);
+					}
+
+					else {
+						for (int i = 0; i < target; i++) {
+							nam_end.push_back(nam_2[i]);
+						}
+						for (int i = 0; i < target; i++) {
+							int sum_1 = nam_end[i] - nam_1[i];
+							if (sum_1 < 0) {
+								
+								nam_end[i] = sum_1 + 10;
+								int ii = i + 1;
+								while (true) {
+									if (ii == target) {
+										break;
+									}
+									else {
+										int sum_2 = nam_end[ii] - 1;
+										if (sum_2 < 0) {
+											
+											nam_end[ii] = sum_2 + 10;
+
+										}
+										else {
+											nam_end[ii] = sum_2;
+											break;
+										}
+
+									}
+									ii++;
+								}
+
+							}
+							else {
+								nam_end[i] = sum_1;
+							}
 
 
+
+
+
+
+
+
+
+						}
+
+
+
+
+
+
+
+
+
+
+
+
+					}
+				}
+
+				if (nam_1.size() > nam_2.size()) {
+
+
+
+				}
+
+				if (nam_1.size() < nam_2.size()) {
+
+
+
+				}
 
 
 
