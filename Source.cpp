@@ -13,6 +13,103 @@ private:
 	vector<int> nam_end;                   //число после арм. действий
 	bool is_it_minus_end = 0;             // имеет ли конечное число "-"
 
+	void SumWithMinus_1() {
+
+		for (int i = 0; i < nam_1.size(); i++) {
+			nam_end.push_back(nam_1[i]);
+		}
+		for (int i = 0; i < nam_2.size(); i++) {
+
+			int sum_1 = nam_end[i] - nam_2[i];
+
+			if (sum_1 < 0) { // если сумма заставляет от след числа отнимать 1
+
+				nam_end[i] = sum_1 + 10; // из отриц в полож
+				int ii = i + 1; // это будет след числом
+				while (true) {
+					if (ii == nam_end.size()) { // если выходит за пределы вектора
+						break;
+					}
+					else { // если вектор еще есть
+						int sum_2 = nam_end[ii] - 1; // будущее след число
+						if (sum_2 < 0) { // не порядочная
+
+							nam_end[ii] = sum_2 + 10;
+
+						}
+						else { // порядочная
+							nam_end[ii] = sum_2;
+							break;
+						}
+
+					}
+					ii++;
+				}
+
+			}
+			else { //если ссумма порядочая и можно просто прировнять
+				nam_end[i] = sum_1;
+			}
+			for (int i = nam_end.size() - 1; i >= 0; i--) { // удаление нулей в начале числа
+				if (nam_end[i] == 0) {
+					nam_end.pop_back();
+				}
+				else {
+					break;
+				}
+			}
+		}
+
+	}
+	void SumWithMinus_2() {
+
+		for (int i = 0; i < nam_2.size(); i++) {
+			nam_end.push_back(nam_2[i]);
+		}
+		for (int i = 0; i < nam_1.size(); i++) {
+
+			int sum_1 = nam_end[i] - nam_1[i];
+
+			if (sum_1 < 0) { // если сумма заставляет от след числа отнимать 1
+
+				nam_end[i] = sum_1 + 10; // из отриц в полож
+				int ii = i + 1; // это будет след числом
+				while (true) {
+					if (ii == nam_end.size()) { // если выходит за пределы вектора
+						break;
+					}
+					else { // если вектор еще есть
+						int sum_2 = nam_end[ii] - 1; // будущее след число
+						if (sum_2 < 0) { // не порядочная
+
+							nam_end[ii] = sum_2 + 10;
+
+						}
+						else { // порядочная
+							nam_end[ii] = sum_2;
+							break;
+						}
+
+					}
+					ii++;
+				}
+
+			}
+			else { //если ссумма порядочая и можно просто прировнять
+				nam_end[i] = sum_1;
+			}
+			for (int i = nam_end.size() - 1; i >= 0; i--) { // удаление нулей в начале числа
+				if (nam_end[i] == 0) {
+					nam_end.pop_back();
+				}
+				else {
+					break;
+				}
+			}
+		}
+
+	}
+
 
 public:
 	bool creator(string snam_1, string snam_2) {      
@@ -247,20 +344,26 @@ public:
 				}
 
 				if (nam_1.size() > nam_2.size()) {
-
-
-
+					if (is_it_minus_1 == 1) { // если большее число с -
+						is_it_minus_end = 1;
+						SumWithMinus_1();
+					}
+					else if (is_it_minus_2 == 1) { //если меньшее число с -
+						is_it_minus_end = 0;
+						SumWithMinus_1();
+					}
 				}
 
 				if (nam_1.size() < nam_2.size()) {
-
-
-
+					if (is_it_minus_1 == 1) { // если большее число с -
+						is_it_minus_end = 0;
+						SumWithMinus_2();
+					}
+					else if (is_it_minus_2 == 1) { //если меньшее число с -
+						is_it_minus_end = 1;
+						SumWithMinus_2();
+					}
 				}
-
-
-
-
 			}
 			else  { // если 2 числа без минуса или 2 с минусом
 				if (is_it_minus_1 == 0 && is_it_minus_2 == 0) { // присвоение плюса
