@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+
 using namespace std;
 
 class Big_numbers {
@@ -109,7 +110,37 @@ private:
 		}
 
 	}
+	void SumWithMinusOrPlus(int i) {
+		int val = 1; // на сколько элем нужно уйти чтоб проверить згачение на галичие значений выше чем 9
+		while (true) // пока не поймет что след символы не равны 10 или больше
+		{
+			int rr = i + val; // идет проверка этого элемента в векторе
+			if (rr < nam_end.size()) { // если элемент существует
+				if (nam_end[rr] > 9) { // если его нужно изменять
+					nam_end[rr] = nam_end[rr] % 10;
+					if (rr + 1 < nam_end.size()) {// если след символ существует 
+						nam_end[rr + 1] = nam_end[rr + 1] + 1; // увелечение след символа на 1
+					}
+					else { // если след символа в векторе не существует
+						nam_end.push_back(1); // добавление 1 в конец вектора
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			else { // если элемента не существует
+				if (nam_end[rr] > 9) { // если его нужно изменять
+					nam_end[rr] = nam_end[rr] % 10;
+					nam_end.push_back(1); // добавляем на послед элем 1
+				}
+				break;
+			}
+			val++;
 
+		}
+	}
 
 public:
 	bool creator(string snam_1, string snam_2) {      
@@ -367,8 +398,6 @@ public:
 			}
 			else  { // если 2 числа без минуса или 2 с минусом
 				if (is_it_minus_1 == 0 && is_it_minus_2 == 0) { // присвоение плюса
-
-
 				}
 				else if (is_it_minus_1 == 1 && is_it_minus_2 == 1) { // присвоение минуса
 
@@ -388,38 +417,7 @@ public:
 							nam_end[i] = iii;
 						
 							nam_end[i + 1] = nam_end[i + 1] + 1; // след элем повысился на 1
-								int val = 1; // на сколько элем нужно уйти чтоб проверить згачение на галичие значений выше чем 9
-							while (true) // пока не поймет что след символы не равны 10 или больше
-							{
-									int rr = i + val; // идет проверка этого элемента в векторе
-									if (rr < nam_end.size()) { // если элемент существует
-										if (nam_end[rr] > 9) { // если его нужно изменять
-											nam_end[rr] = nam_end[rr] % 10;
-											if (rr + 1 < nam_end.size()) {// если след символ существует 
-												nam_end[rr + 1] = nam_end[rr + 1] + 1; // увелечение след символа на 1
-											}
-											else { // если след символа в векторе не существует
-												nam_end.push_back(1); // добавление 1 в конец вектора
-												break;
-											}
-										}
-										else {
-											break;
-										}
-									}
-									else { // если элемента не существует
-										if (nam_end[rr] > 9) { // если его нужно изменять
-											nam_end[rr] = nam_end[rr] % 10;
-											nam_end.push_back(1); // добавляем на послед элем 1
-										}
-										break;
-									}
-									val++;
-
-							}
-							
-							
-
+							SumWithMinusOrPlus(i);
 						}
 						else if (sum_2_elem < 10) {   // если нужно прибовлять 1 к след числу
 							nam_end[i] = sum_2_elem;  // присвоение суммы к элементу
@@ -442,44 +440,11 @@ public:
 							nam_end[i] = iii;
 
 							nam_end[i + 1] = nam_end[i + 1] + 1; // след элем повысился на 1
-							int val = 1; // на сколько элем нужно уйти чтоб проверить згачение на галичие значений выше чем 9
-							while (true) // пока не поймет что след символы не равны 10 или больше
-							{
-								int rr = i + val; // идет проверка этого элемента в векторе
-								if (rr < nam_end.size()) { // если элемент существует
-									if (nam_end[rr] > 9) { // если его нужно изменять
-										nam_end[rr] = nam_end[rr] % 10;
-										if (rr + 1 < nam_end.size()) {// если след символ существует 
-											nam_end[rr + 1] = nam_end[rr + 1] + 1; // увелечение след символа на 1
-										}
-										else { // если след символа в векторе не существует
-											nam_end.push_back(1); // добавление 1 в конец вектора
-											break;
-										}
-									}
-									else {
-										break;
-									}
-								}
-								else { // если элемента не существует
-									if (nam_end[rr] > 9) { // если его нужно изменять
-										nam_end[rr] = nam_end[rr] % 10;
-										nam_end.push_back(1); // добавляем на послед элем 1
-									}
-									break;
-								}
-								val++;
-
-							}
-
-
-
+							SumWithMinusOrPlus(i);
 						}
 						else if (sum_2_elem < 10) {   // если нужно прибовлять 1 к след числу
 							nam_end[i] = sum_2_elem;  // присвоение суммы к элементу
 						}
-
-
 
 					}
 
@@ -551,6 +516,52 @@ public:
 			}
 		}
 	}
+	void razn() {
+		if (nam_1.size() != 0 || nam_2.size() != 0) {          //если вектора существуют
+			
+			if (is_it_minus_1 == 0 && is_it_minus_2 == 0) {
+				is_it_minus_2 = 1;
+				sum();
+			}
+			else if (is_it_minus_1 == 1 && is_it_minus_2 == 1) {
+				is_it_minus_2 = 0;
+				sum();
+			}
+			else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) {
+				is_it_minus_2 = 0;
+				sum();
+			}
+			else if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {
+				is_it_minus_2 = 1;
+				sum();
+			}
+
+		}
+	}
+	void ymn(){
+	
+	
+	}
+	void del(){
+	
+	
+	}
+	void print() {
+		if (nam_end.size() != 0) {
+			cout << "Answer : ";
+			if (is_it_minus_end == 1) {
+				cout << "-";				
+			}
+			for (int i = nam_end.size() - 1; i >= 0; i--) {
+				cout << nam_end[i];
+			}
+			cout << endl;
+
+		}
+
+
+	}
+
 
 
 
@@ -571,41 +582,58 @@ int main() {
 	while (true)
 	{
 		
-		string snam_1;
-		string snam_2;
-		cout << "enter nam 1 : "; cin >> snam_1; cout << endl;
-		cout << "enter nam 2 : "; cin >> snam_2; cout << endl;
-
-
+		cout << "\t \t \t \t MENU \t \t" << endl;
+		cout << "Enter :  \t 1 - Sum(+) \t 2 - difference(-)\t 3 - multiplication(*) \t 4 - division(/)" << endl;
+		string rr;
+		cin >> rr;  cout << endl;
+		if (rr.size() == 1) {
+			if (rr[0] == '1' || rr[0] == '2' || rr[0] == '3' || rr[0] == '4') {
+				int r = stoi(rr.c_str());
+				string snam_1;
+				string snam_2;
+				Big_numbers win;
+				
+				if (r == 1) {
+					cout << "First number : "; cin >> snam_1; cout << endl;
+					cout << "Second number : "; cin >> snam_2; cout << endl;
+					bool correct = win.creator(snam_1, snam_2);
+					if (correct == 1) {
+						win.sum();
+						win.print();
+					}
+				}
+				else if (r == 2) {
+					cout << "First number : "; cin >> snam_1; cout << endl;
+					cout << "Second number : "; cin >> snam_2; cout << endl;
+					bool correct = win.creator(snam_1, snam_2);
+					if (correct == 1) {
+						win.razn();
+						win.print();
+					}
+				}
+				else if (r == 3) {
+					cout << "First number : "; cin >> snam_1; cout << endl;
+					cout << "Second number : "; cin >> snam_2; cout << endl;
+					bool correct = win.creator(snam_1, snam_2);
+					if (correct == 1) {
+						win.ymn();
+						win.print();
+					}
+				}
+				else if (r == 4) {
+					cout << "First number : "; cin >> snam_1; cout << endl;
+					cout << "Second number : "; cin >> snam_2; cout << endl;
+					bool correct = win.creator(snam_1, snam_2);
+					if (correct == 1) {
+						win.del();
+						win.print();
+					}
+				}
+			}
+		}
 		if (cin.fail()) {
 			cin.clear();
-			
-
 		}
-
-
-
-		 
-		Big_numbers Win;
-		bool correct = Win.creator(snam_1, snam_2);
-		Win.sum();
-		if (correct == 1) {
-			Win.test_vivod();
-			cout << endl;
-			
-
-
-		}
-	
-
-
-
-
-
-
-
-	
-
 	}
 	return 0;
 }
