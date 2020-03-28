@@ -127,54 +127,101 @@ public:
 	}
 	void sum() {
 		if (nam_1.size() != 0 || nam_2.size() != 0) {          //если вектора существуют
-			if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {    // если одно из чисел с минусом
+			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {    // если одно из чисел с минусом
 				
-				if (nam_1.size() == nam_2.size()) {
-					bool trriger = 0;
-					int target;
-					for (int i = nam_1.size() - 1; i >= 0; i--) {
-						if (nam_1[i] == nam_2[i]) {
-							if (i == 0) {
-								trriger = 1;
+				if (nam_1.size() == nam_2.size()) { // если размеры вектора равны
+					bool trriger = 0;     // Он будет равен 1 если 2 числа одинаковы
+					int target;         // показывает с какого числа в сайзе начинаются одинаковые символы(до конца)
+					for (int i = nam_1.size() - 1; i >= 0; i--) { // пробег по числу от большего к меньшему
+						
+						if (nam_1[i] == nam_2[i]) { // если число равно 
+							if (i == 0) { // если чисто уже последнее 
+								trriger = 1; // ответ равен 0
 								break;
 							}
 						}
-						else if (nam_1[i] > nam_2[i]) {
-							is_it_minus_end = 1;
+						else if (nam_1[i] > nam_2[i]) { // если числа не равны
+							if (is_it_minus_1 == 1 && is_it_minus_2 == 0) { // если минус еть у 1ого числа
+								is_it_minus_end = 1;
+								
+							}
 							target = i + 1;
 							break;
 						}
-						else if (nam_1[i] < nam_2[i]) {
+						else if (nam_1[i] < nam_2[i]) {  // если числа не равны
+							if (is_it_minus_1 == 0 && is_it_minus_2 == 1) { // если минус еть у 2ого числа
+								is_it_minus_end = 1;
+								
+							}
+							
 							target = i + 1;
 							break;
 						}
 					}
 					if (trriger == 1) {
-						nam_end.push_back(0);
+						nam_end.push_back(0); // условия при котором ответ = 0 выполнено
 					}
-
-					else {
-						for (int i = 0; i < target; i++) {
-							nam_end.push_back(nam_2[i]);
+					else {  // если число не равно 0
+						if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {  // если число 1 с минусом
+							if (is_it_minus_end == 0) { // ели ответ с плюсом
+								for (int i = 0; i < target; i++) { //  приравневаем (на время) ответ к 2 числу до таргета
+									nam_end.push_back(nam_2[i]);
+								}
+							}
+							else { // если оивет с минусом
+								for (int i = 0; i < target; i++) {
+									nam_end.push_back(nam_1[i]); //   приравневаем (на время) ответ к 1 числу до таргета
+								}
+							}
 						}
-						for (int i = 0; i < target; i++) {
-							int sum_1 = nam_end[i] - nam_1[i];
-							if (sum_1 < 0) {
+						else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) {// если число 2 с минусом
+							if (is_it_minus_end == 0) {    // ели ответ с плюсом
+								for (int i = 0; i < target; i++) {
+									nam_end.push_back(nam_1[i]); // приравневаем(на время) ответ к 1 числу до таргета
+								}
+							}
+							else {  // если оивет с минусом
+								for (int i = 0; i < target; i++) { 
+									nam_end.push_back(nam_2[i]);   //  приравневаем (на время) ответ к 2 числу до таргета
+								}
+							}
+						}
+
+						for (int i = 0; i < target; i++) { //прогоняемся по таргету 
+							int sum_1; // сумма 
+							if (is_it_minus_1 == 1 && is_it_minus_2 == 0) { // если число 1 с минусом     #по факту тут мы реаем от чего будем отнимать при идее отнимать от большего меньшее(обьясню на сдаче)
+								if (is_it_minus_end == 0) {                 // если ответ без минуса
+									sum_1 = nam_end[i] - nam_1[i];    
+								}
+								else if (is_it_minus_end == 1) {   // если ответ с минуса
+									sum_1 = nam_end[i] - nam_2[i];
+								}
+							}
+							else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) {// если число 2 с минусом
+								if (is_it_minus_end == 0) {  // если ответ без минуса
+									sum_1 = nam_end[i] - nam_2[i];
+								}
+								else if (is_it_minus_end == 1) {  // если ответ с минуса
+									sum_1 = nam_end[i] - nam_1[i];
+								}
+							}
+
+							if (sum_1 < 0) { // если сумма заставляет от след числа отнимать 1
 								
-								nam_end[i] = sum_1 + 10;
-								int ii = i + 1;
+								nam_end[i] = sum_1 + 10; // из отриц в полож
+								int ii = i + 1; // это будет след числом
 								while (true) {
-									if (ii == target) {
+									if (ii == target) { // если выходит за пределы вектора
 										break;
 									}
-									else {
-										int sum_2 = nam_end[ii] - 1;
-										if (sum_2 < 0) {
+									else { // если вектор еще есть
+										int sum_2 = nam_end[ii] - 1; // будущее след число
+										if (sum_2 < 0) { // не порядочная
 											
-											nam_end[ii] = sum_2 + 10;
+											nam_end[ii] = sum_2 + 10; 
 
 										}
-										else {
+										else { // порядочная
 											nam_end[ii] = sum_2;
 											break;
 										}
@@ -184,31 +231,18 @@ public:
 								}
 
 							}
-							else {
+							else { //если ссумма порядочая и можно просто прировнять
 								nam_end[i] = sum_1;
 							}
-
-
-
-
-
-
-
-
-
 						}
-
-
-
-
-
-
-
-
-
-
-
-
+						for (int i = target - 1; i >= 0; i--) { // удаление нулей в начале числа
+							if (nam_end[i] == 0) {
+								nam_end.pop_back();
+							}
+							else {
+								break;
+							}
+						}
 					}
 				}
 
@@ -223,14 +257,6 @@ public:
 
 
 				}
-
-
-
-
-			}
-			else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) { // если одно из чисел с минусом
-
-
 
 
 
