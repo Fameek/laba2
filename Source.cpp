@@ -183,7 +183,7 @@ public:
 			}
 		}
 		if (trriger == 1) {        // если число не корректное то сообщаем об ошибке и возвращаем значение неудачи 
-			cout << "ERROR:incorrect numbers" << endl;
+			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
 			return false;
 		}
 		for (int i = 0; i < snam_2.size(); i++) {             // начало оброботки 2 строки
@@ -210,7 +210,7 @@ public:
 			}
 		}
 		if (trriger == 1) { // если некоректное число то выходим с ошибкой
-			cout << "ERROR:incorrect numbers" << endl;
+			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
 			return false;
 		}
 		else if (trriger == 0) { // если все прошло хорошо то записываем эти вектора в главные вектора задом на перед
@@ -661,50 +661,69 @@ public:
 
 		}
 	}
-	void del(){      // НЕ ВЕРНО !!!!!!!!!!!
-		if (nam_1.size() == nam_2.size()) {
-
-
-
-			for (int i = nam_1.size() - 1; i >= 0 ; i--)
-			{
-
-				if (nam_1[i] == nam_2[i]) {
-
-
-				}
-				else if (nam_1[i] > nam_2[i]) {
-					if (i == nam_1.size() - 1) {
-						int ii = nam_1[i] / nam_2[i];
-						nam_end.push_back(ii);
-						break;
-					}
-					nam_end.push_back(1);
-					break;
-
-				}
-				else if (nam_1[i] < nam_2[i]) {
-					nam_end.push_back(0);
-					break;
-				}
-				if (i == 0) {
-					nam_end.push_back(1);
-					break;
-				}
-
+	void del(){      
+		if (nam_1.size() != 0 || nam_2.size() != 0) {
+			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {//решение вопроса с минусом
+				is_it_minus_end = 1;
+			}
+			else if (is_it_minus_1 == 1 && is_it_minus_2 == 1 || is_it_minus_1 == 0 && is_it_minus_2 == 0) { // решение вопроса с минусом или плюсом
+				is_it_minus_end = 0;
 			}
 
-		}
-		else if (nam_1.size() > nam_2.size()) {
+			if (nam_1.size() == nam_2.size()) {
+				string nam_1_str = "000000000"; // заполнил 9 элементов(0 всеравно сократятся) 
+				string nam_2_str = "000000000";
+				int i = 0;
+				while (true)
+				{
+					if (nam_1.size() - i != 0) {
+						
+						string nam_1_str_1 = to_string(nam_1[nam_1.size() - i - 1]);
+						nam_1_str[i] = nam_1_str_1[0];
+						string nam_2_str_1 = to_string(nam_2[nam_2.size() - i - 1]);
+						nam_2_str[i] = nam_2_str_1[0];
 
-		}
-		else if (nam_1.size() < nam_2.size()) {
+						if (i == 8) {
+							break;
+						}
+						i++;
+					}
+					else {
+						break;
+					}
+				}
+
+				int nam_1_int = stoi(nam_1_str.c_str());
+				int nam_2_int = stoi(nam_2_str.c_str());
+				nam_end.push_back(nam_1_int / nam_2_int);
+			}
+			else if (nam_1.size() < nam_2.size()) {
+				is_it_minus_end = 0;
+				nam_end.push_back(0);
+			}
+			else if (nam_1.size() > nam_2.size()) {
 
 
-		}
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			}
+		}	
 	}
 	void print() {
+		
+		
 		if (nam_end.size() != 0) {
 			cout << "Answer : ";
 			if (is_it_minus_end == 1) {
