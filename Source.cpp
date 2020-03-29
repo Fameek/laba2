@@ -131,10 +131,9 @@ private:
 				}
 			}
 			else { // если элемента не существует
-				if (nam_end[rr] > 9) { // если его нужно изменять
-					nam_end[rr] = nam_end[rr] % 10;
-					nam_end.push_back(1); // добавляем на послед элем 1
-				}
+				
+				nam_end.push_back(1); // добавляем на послед элем 1
+				
 				break;
 			}
 			val++;
@@ -227,6 +226,7 @@ public:
 			}
 			return 1;
 		}
+		return false;
 	}
 	void test_vivod() { // тестовый вывод 3 векторов из привата
 		if (is_it_minus_1 == 1) {
@@ -539,11 +539,169 @@ public:
 		}
 	}
 	void ymn(){
-	
-	
+		if (nam_1.size() != 0 || nam_2.size() != 0) {
+			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {//решение вопроса с минусом
+				is_it_minus_end = 1;
+			}
+			else if (is_it_minus_1 == 1 && is_it_minus_2 == 1 || is_it_minus_1 == 0 && is_it_minus_2 == 0) { // решение вопроса с минусом или плюсом
+				is_it_minus_end = 0;
+			}
+
+
+
+			if (nam_1.size() == 1 || nam_2.size() == 1) { // на ноль умножать = 0
+				if (nam_1[0] == 0 || nam_2[0] == 0) {
+					nam_end.push_back(0);
+				
+				}
+			}
+
+			if (nam_end.size() != 1) {
+				for (int i = 0; i < nam_1.size(); i++) {     // умножние 1 числа
+					for (int ii = 0; ii < nam_2.size(); ii++) { // на второе
+						if (nam_end.size() == ii + i) {    // если выходим за пределы вектора ответа
+							int ymn_1 = nam_1[i] * nam_2[ii];
+							if (ymn_1 > 9) {
+								nam_end.push_back(ymn_1 % 10);
+								string str = to_string(ymn_1);
+								string str_1;
+								str_1 = str[0];
+								nam_end.push_back(stoi(str_1.c_str()));
+							}
+							else if (ymn_1 < 10) {
+								nam_end.push_back(ymn_1);
+							}
+
+						}
+						else {   // если работаем уже с данными вектора
+							int ymn_1 = nam_1[i] * nam_2[ii];
+							if (ymn_1 > 9) { // не порядочная
+								int rr = ymn_1 % 10;
+								int sum_1 = nam_end[i + ii] + rr;
+								if (sum_1 > 9) {
+									nam_end[i + ii] = sum_1 - 10;
+									if (i + ii + 1 < nam_end.size()) {
+										nam_end[i + ii + 1] = nam_end[i + ii + 1] + 1;
+										SumWithMinusOrPlus(i + ii);
+									}
+									else {
+										nam_end.push_back(1);
+									}
+								}
+								else if (sum_1 < 10) {
+									nam_end[i + ii] = sum_1;
+								}
+								string str = to_string(ymn_1);
+								string str_1;
+								str_1 = str[0];
+								int ymn_2 = stoi(str_1.c_str());
+								if (nam_end.size() != i + ii + 1) {
+									int sum_2 = nam_end[i + ii + 1] + ymn_2;
+									if (sum_2 > 9) {
+										nam_end[i + ii + 1] = sum_2 - 10;
+
+										if (i + ii + 2 < nam_end.size()) {
+											nam_end[i + ii + 2] = nam_end[i + ii + 2] + 1;
+											SumWithMinusOrPlus(i + ii + 1);
+										}
+										else {
+											nam_end.push_back(1);
+										}
+									}
+									else if (sum_2 < 10) {
+										nam_end[i + ii + 1] = sum_2;
+									}
+								}
+								else {
+									nam_end.push_back(ymn_2);
+								}
+
+							}
+							else if (ymn_1 < 10) { // класная с (возможно) плохими детьми
+								int sum_1 = nam_end[i + ii] + ymn_1; 
+								if (sum_1 > 9) { // плохой
+									nam_end[i + ii] = sum_1 - 10;
+									if (i + ii + 1 < nam_end.size()) {
+										nam_end[i + ii + 1] = nam_end[i + ii + 1] + 1;
+										SumWithMinusOrPlus(i + ii);
+									}
+									else {
+										nam_end.push_back(1);
+									}
+								}
+								else if (sum_1 < 10) { // хороший
+									nam_end[i + ii] = sum_1;
+								}
+
+							}
+
+						}
+
+
+
+
+
+					}
+
+
+
+
+					
+				}
+
+
+
+			}
+			
+
+
+
+
+
+
+		}
 	}
-	void del(){
-	
+	void del(){      // НЕ ВЕРНО !!!!!!!!!!!
+		if (nam_1.size() == nam_2.size()) {
+
+
+
+			for (int i = nam_1.size() - 1; i >= 0 ; i--)
+			{
+
+				if (nam_1[i] == nam_2[i]) {
+
+
+				}
+				else if (nam_1[i] > nam_2[i]) {
+					if (i == nam_1.size() - 1) {
+						int ii = nam_1[i] / nam_2[i];
+						nam_end.push_back(ii);
+						break;
+					}
+					nam_end.push_back(1);
+					break;
+
+				}
+				else if (nam_1[i] < nam_2[i]) {
+					nam_end.push_back(0);
+					break;
+				}
+				if (i == 0) {
+					nam_end.push_back(1);
+					break;
+				}
+
+			}
+
+		}
+		else if (nam_1.size() > nam_2.size()) {
+
+		}
+		else if (nam_1.size() < nam_2.size()) {
+
+
+		}
 	
 	}
 	void print() {
