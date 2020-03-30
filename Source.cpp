@@ -516,22 +516,28 @@ public:
 			}
 		}
 	}
-	void razn() {
+	void razn(int i) {
 		if (nam_1.size() != 0 || nam_2.size() != 0) {          //если вектора существуют
-			
-			if (is_it_minus_1 == 0 && is_it_minus_2 == 0) {
-				is_it_minus_2 = 1;
-				sum();
+			if (i == 0) {
+				if (is_it_minus_1 == 0 && is_it_minus_2 == 0) {
+					is_it_minus_2 = 1;
+					sum();
+				}
+				else if (is_it_minus_1 == 1 && is_it_minus_2 == 1) {
+					is_it_minus_2 = 0;
+					sum();
+				}
+				else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) {
+					is_it_minus_2 = 0;
+					sum();
+				}
+				else if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {
+					is_it_minus_2 = 1;
+					sum();
+				}
 			}
-			else if (is_it_minus_1 == 1 && is_it_minus_2 == 1) {
-				is_it_minus_2 = 0;
-				sum();
-			}
-			else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) {
-				is_it_minus_2 = 0;
-				sum();
-			}
-			else if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {
+			else {
+				is_it_minus_1 = 0;
 				is_it_minus_2 = 1;
 				sum();
 			}
@@ -663,61 +669,120 @@ public:
 	}
 	void del(){      
 		if (nam_1.size() != 0 || nam_2.size() != 0) {
+			bool minus = 0;
 			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {//решение вопроса с минусом
-				is_it_minus_end = 1;
+				minus = 1;
 			}
 			else if (is_it_minus_1 == 1 && is_it_minus_2 == 1 || is_it_minus_1 == 0 && is_it_minus_2 == 0) { // решение вопроса с минусом или плюсом
-				is_it_minus_end = 0;
+				minus = 0;
 			}
+			if (nam_2.size() == 1 && nam_2[0] == 1) { // деление на 1
+				for (int i = 0; i < nam_1.size(); i++) {
+					nam_end.push_back(nam_1[i]);
+				}
+			}
+			else {
+				if (nam_1.size() == nam_2.size()) {
+					string nam_1_str = "000000000"; // заполнил 9 элементов(0 всеравно сократятся) 
+					string nam_2_str = "000000000";
+					int i = 0;
+					while (true) // запись 9 элементов в стринг или меньше
+					{
+						if (nam_1.size() - i != 0) {
 
-			if (nam_1.size() == nam_2.size()) {
-				string nam_1_str = "000000000"; // заполнил 9 элементов(0 всеравно сократятся) 
-				string nam_2_str = "000000000";
-				int i = 0;
-				while (true)
-				{
-					if (nam_1.size() - i != 0) {
-						
-						string nam_1_str_1 = to_string(nam_1[nam_1.size() - i - 1]);
-						nam_1_str[i] = nam_1_str_1[0];
-						string nam_2_str_1 = to_string(nam_2[nam_2.size() - i - 1]);
-						nam_2_str[i] = nam_2_str_1[0];
+							string nam_1_str_1 = to_string(nam_1[nam_1.size() - i - 1]);
+							nam_1_str[i] = nam_1_str_1[0];
+							string nam_2_str_1 = to_string(nam_2[nam_2.size() - i - 1]);
+							nam_2_str[i] = nam_2_str_1[0];
 
-						if (i == 8) {
+							if (i == 8) {
+								break;
+							}
+							i++;
+						}
+						else {
 							break;
 						}
-						i++;
 					}
-					else {
-						break;
-					}
+
+					int nam_1_int = stoi(nam_1_str.c_str()); // преобразование стринга в инт
+					int nam_2_int = stoi(nam_2_str.c_str());
+					nam_end.push_back(nam_1_int / nam_2_int); // ответ равен делению этих чисел
 				}
+				else if (nam_1.size() < nam_2.size()) { // логично
+					is_it_minus_end = 0;
+					nam_end.push_back(0);
+				}
+				else if (nam_1.size() > nam_2.size()) { // добавление 0 ,создание запасов , удаление пошагово нулей , изменение нам1 и нам2
+					int nam_2_size = nam_2.size();
+					int nam_1__nam_2 = nam_1.size() - nam_2.size();
+					vector<int> nam_2_zer;
+					for (int i = nam_2.size() - 1; i >= 0; i--) {
+						nam_2_zer.push_back(nam_2[i]);
+					}
+					for (int i = 0; i < nam_1__nam_2; i++) {
+						nam_2_zer.push_back(0);
+					}
+					for (int i = 0; i < nam_2_size; i++) {
+						nam_2.pop_back();
+					}
+					for (int i = 0; i < nam_2_zer.size(); i++) {
+						nam_2.push_back(nam_2_zer[nam_1.size() - 1 - i]);
+					}
+					/*vector<int> nam_1_save;
+					for (int i = 0; i < nam_1.size(); i++) {
+						nam_1_save.push_back(nam_1[i]);
+					}*/
+					int target = 0;
+					vector<int> end;
+					while (1) {
+						razn(1);
+						int size_2 = nam_2.size();
+						int size_1 = nam_1.size();
+						int size_end = nam_end.size();
+						if (is_it_minus_end == 0) {
+							target++;
 
-				int nam_1_int = stoi(nam_1_str.c_str());
-				int nam_2_int = stoi(nam_2_str.c_str());
-				nam_end.push_back(nam_1_int / nam_2_int);
-			}
-			else if (nam_1.size() < nam_2.size()) {
-				is_it_minus_end = 0;
-				nam_end.push_back(0);
-			}
-			else if (nam_1.size() > nam_2.size()) {
+							for (int i = 0; i < size_1; i++) {
+								nam_1.pop_back();
+							}
+							for (int i = 0; i < nam_end.size(); i++) {
+								nam_1.push_back(nam_end[i]);
+							}
+							for (int i = 0; i < size_end; i++) {
+								nam_end.pop_back();
+							}
+
+						}
+						else if (is_it_minus_end == 1) {
+							end.push_back(target);
+							target = 0;
+							for (int i = 0; i < size_end; i++) {
+								nam_end.pop_back();
+							}
+							if (nam_2.size() == nam_2_size) {
+								break;
+							}
+							else {
+								for (int i = 0; i < size_2; i++) {
+									nam_2.pop_back();
+								}
+								nam_2_zer.pop_back();
+								is_it_minus_end = 0;
+								for (int i = 0; i < nam_2_zer.size(); i++) {
+									nam_2.push_back(nam_2_zer[nam_2_zer.size() - 1 - i]);
+								}
+							}
+						}
+					}
+					is_it_minus_end = minus;
+					for (int i = end.size() - 1; i >= 0; i--) {
+						nam_end.push_back(end[i]);
+					}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+				}
 			}
 		}	
 	}
@@ -784,7 +849,7 @@ int main() {
 					cout << "Second number : "; cin >> snam_2; cout << endl;
 					bool correct = win.creator(snam_1, snam_2);
 					if (correct == 1) {
-						win.razn();
+						win.razn(0);
 						win.print();
 					}
 				}
