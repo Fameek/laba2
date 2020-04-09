@@ -13,6 +13,9 @@ private:
 	bool is_it_minus_2 = 0;                // имеет ли число 2 "-"
 	vector<int> nam_end;                   //число после арм. действий
 	bool is_it_minus_end = 0;             // имеет ли конечное число "-"
+	vector<int> ansver;
+	bool is_it_minus_ansver = 0;
+	
 
 	void SumWithMinus_1() {
 
@@ -140,9 +143,43 @@ private:
 
 		}
 	}
-
+	void dell_nam_1_2() {
+		if (nam_1.size() != 0) {
+			int ii = nam_1.size();
+			for (int i = 0; i < ii; i++) {
+				nam_1.pop_back();
+			}
+		}
+		if (nam_2.size() != 0) {
+			int ii = nam_2.size();
+			for (int i = 0; i < ii; i++) {
+				nam_2.pop_back();
+			}
+		}
+	}
+	void dell_end() {
+		if (nam_end.size() != 0) {
+			int ii = nam_end.size();
+			for (int i = 0; i < ii; i++) {
+				nam_end.pop_back();
+			}
+		}
+	}
+	void dell_answer() {
+		if (ansver.size() != 0) {
+			int ii = ansver.size();
+			for (int i = 0; i < ii; i++) {
+				ansver.pop_back();
+			}
+		}
+	}
+	
 public:
-	bool creator(string snam_1, string snam_2) {      
+	
+	bool creator(string snam_1, string snam_2) { 
+	
+		dell_data();
+
 		vector<int> nam_1f;                          // временный вектор для записи 1 числа
 		vector<int> nam_2f;                          // временный вектор для записи 2 числа
 		bool trriger = 0;                            // тригер, если он равен 1
@@ -184,6 +221,7 @@ public:
 		}
 		if (trriger == 1) {        // если число не корректное то сообщаем об ошибке и возвращаем значение неудачи 
 			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			dell_nam_1_2();
 			return false;
 		}
 		for (int i = 0; i < snam_2.size(); i++) {             // начало оброботки 2 строки
@@ -211,6 +249,7 @@ public:
 		}
 		if (trriger == 1) { // если некоректное число то выходим с ошибкой
 			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			dell_nam_1_2();
 			return false;
 		}
 		else if (trriger == 0) { // если все прошло хорошо то записываем эти вектора в главные вектора задом на перед
@@ -224,37 +263,48 @@ public:
 				int iii = nam_2f[ii];
 				nam_2.push_back(iii);
 			}
-			return 1;
+			return true;
 		}
+		dell_nam_1_2();
 		return false;
 	}
-	void test_vivod() { // тестовый вывод 3 векторов из привата
-		if (is_it_minus_1 == 1) {
-			cout << "-";
+	void print_all() { 
+		if (nam_1.size() != 0) {
+			cout << "nam 1: ";
+			if (is_it_minus_1 == 1) {
+				cout << "-";
+			}
+			for (int i = nam_1.size() - 1; i >= 0; i--) {
+				cout << nam_1[i];
+			}
+			cout << endl;
 		}
-		for (int i = nam_1.size() - 1; i >= 0; i--) {
-			cout << nam_1[i];
-		}
-		cout << endl;
-		if (is_it_minus_2 == 1) {
-			cout << "-";
+		if (nam_2.size() != 0) {
+			cout << "nam 2: ";
+			if (is_it_minus_2 == 1) {
+				cout << "-";
 
+			}
+			for (int i = nam_2.size() - 1; i >= 0; i--) {
+				cout << nam_2[i];
+			}
+			cout << endl;
 		}
-		for (int i = nam_2.size() - 1; i >= 0; i--) {
-			cout << nam_2[i];
-		}
-		cout << endl;
-		if (is_it_minus_end == 1) {
-			cout << "-";
+		if (ansver.size() != 0) {
+			cout << "answer: ";
+			if (is_it_minus_ansver == 1) {
+				cout << "-";
 
+			}
+			for (int i = ansver.size() - 1; i >= 0; i--) {
+				cout << ansver[i];
+			}
+			cout << endl;
 		}
-		for (int i = nam_end.size() - 1; i >= 0; i--) {
-			cout << nam_end[i];
-		}
-		cout << endl;
 	}
 	void sum() {
 		if (nam_1.size() != 0 || nam_2.size() != 0) {          //если вектора существуют
+			dell_answer();
 			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {    // если одно из чисел с минусом
 				
 				if (nam_1.size() == nam_2.size()) { // если размеры вектора равны
@@ -514,38 +564,47 @@ public:
 				}
 
 			}
+			for (int i = 0; i < nam_end.size(); i++) {
+				ansver.push_back(nam_end[i]);
+			}
+			dell_end();
+			
 		}
 	}
-	void razn(int i) {
+	void razn() {
 		if (nam_1.size() != 0 || nam_2.size() != 0) {          //если вектора существуют
-			if (i == 0) {
+			dell_answer();
 				if (is_it_minus_1 == 0 && is_it_minus_2 == 0) {
 					is_it_minus_2 = 1;
 					sum();
+					is_it_minus_2 = 0;
 				}
 				else if (is_it_minus_1 == 1 && is_it_minus_2 == 1) {
 					is_it_minus_2 = 0;
 					sum();
+					is_it_minus_2 = 1;
 				}
 				else if (is_it_minus_1 == 0 && is_it_minus_2 == 1) {
 					is_it_minus_2 = 0;
 					sum();
+					is_it_minus_2 = 1;
 				}
 				else if (is_it_minus_1 == 1 && is_it_minus_2 == 0) {
 					is_it_minus_2 = 1;
 					sum();
+					is_it_minus_2 = 0;
 				}
-			}
-			else {
-				is_it_minus_1 = 0;
-				is_it_minus_2 = 1;
-				sum();
-			}
+				for (int i = 0; i < nam_end.size(); i++) {
+					ansver.push_back(nam_end[i]);
+				}
+				dell_end();
+				
 
 		}
 	}
 	void ymn(){
 		if (nam_1.size() != 0 || nam_2.size() != 0) {
+			dell_answer();
 			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {//решение вопроса с минусом
 				is_it_minus_end = 1;
 			}
@@ -563,6 +622,9 @@ public:
 			}
 
 			if (nam_end.size() != 1) {
+				vector <int> nam_1_0 = nam_1;
+				vector <int> nam_2_0 = nam_2;
+
 				for (int i = 0; i < nam_1.size(); i++) {     // умножние 1 числа
 					for (int ii = 0; ii < nam_2.size(); ii++) { // на второе
 						if (nam_end.size() == ii + i) {    // если выходим за пределы вектора ответа
@@ -654,13 +716,20 @@ public:
 
 					
 				}
-
-
-
+				dell_nam_1_2();
+				for (int i = 0; i < nam_1_0.size(); i++) {
+					nam_1.push_back(nam_1_0[i]);
+				}
+				for (int i = 0; i < nam_2_0.size(); i++) {
+					nam_2.push_back(nam_2_0[i]);
+				}
 			}
 			
-
-
+			for (int i = 0; i < nam_end.size(); i++) {
+				ansver.push_back(nam_end[i]);
+			}
+			dell_end();
+			
 
 
 
@@ -669,6 +738,9 @@ public:
 	}
 	void del(){      
 		if (nam_1.size() != 0 || nam_2.size() != 0) {
+			dell_answer();
+			vector <int> nam_1_0 = nam_1;
+			vector <int> nam_2_0 = nam_2;
 			bool minus = 0;
 			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {//решение вопроса с минусом
 				minus = 1;
@@ -736,7 +808,14 @@ public:
 					int target = 0;
 					vector<int> end;
 					while (1) {
-						razn(1);
+						is_it_minus_1 = 0;
+						is_it_minus_2 = 1;
+						sum();
+						for (int i = 0; i < ansver.size(); i++) {
+							nam_end.push_back(ansver[i]);
+						}
+
+						dell_answer();
 						int size_2 = nam_2.size();
 						int size_1 = nam_1.size();
 						int size_end = nam_end.size();
@@ -784,27 +863,95 @@ public:
 
 				}
 			}
+			dell_nam_1_2();
+			for (int i = 0; i < nam_1_0.size(); i++) {
+				nam_1.push_back(nam_1_0[i]);
+			}
+			for (int i = 0; i < nam_2_0.size(); i++) {
+				nam_2.push_back(nam_2_0[i]);
+			}
+			for (int i = 0; i < nam_end.size(); i++) {
+				ansver.push_back(nam_end[i]);
+			}
+			
+			dell_end();
+			while (1) {
+				if (ansver[ansver.size() - 1] == 0) {
+					ansver.pop_back();
+				}
+				else {
+					break;
+				}
+			}
 		}	
 	}
-	void print() {
+	void print_answer() {
 		
 		
-		if (nam_end.size() != 0) {
+		if (ansver.size() != 0) {
 			cout << "Answer : ";
-			if (is_it_minus_end == 1) {
+			if (is_it_minus_ansver == 1) {
 				cout << "-";				
 			}
-			for (int i = nam_end.size() - 1; i >= 0; i--) {
-				cout << nam_end[i];
+			for (int i = ansver.size() - 1; i >= 0; i--) {
+				cout << ansver[i];
 			}
 			cout << endl;
-
 		}
-
-
+		else {
+			cout << "Answer is not found" << endl;
+		}
+		
 	}
-
-
+	void computing(string nam_1___nam_2) {
+		dell_data();
+		string nam_1_f;
+		string nam_2_f;
+		int ii = 0;
+		char rr;
+		if (nam_1___nam_2.size() != 0) {
+			for (int i = 0; i < nam_1___nam_2.size(); i++) {
+				ii++;
+				if (nam_1___nam_2[i] == '-' || nam_1___nam_2[i] == '+' || nam_1___nam_2[i] == '*' || nam_1___nam_2[i] == '/') {
+					rr = nam_1___nam_2[i];
+					break;
+				}
+			}
+			if (ii == nam_1___nam_2.size()) {
+				cout << "ERROR:incorrect numbers" << endl;
+			}
+			else {
+				for (int i = 0; i < ii - 1; i++) {
+					nam_1_f.push_back(nam_1___nam_2[i]);
+				}
+				for (int i = ii; i < nam_1___nam_2.size(); i++) {
+					nam_2_f.push_back(nam_1___nam_2[i]);
+				}
+				bool tt = creator(nam_1_f, nam_2_f);
+				if (tt == 1) {
+					if (rr == '+') {
+						sum();
+					}
+					else if (rr == '-') {
+						razn();
+					}
+					else if(rr == '*') {
+						ymn();
+					}
+					else if (rr == '/') {
+						del();
+					}
+					
+				}
+			}
+		}
+	}
+	void dell_data() {
+		dell_nam_1_2();
+		dell_end();
+		dell_answer();
+		
+	}
 
 
 
@@ -820,62 +967,33 @@ public:
 
 
 int main() {
+	Big_numbers win;
+	string a;
+	string b;
+	string c;
+	cout << "nam_1 : "; cin >> a;
+	cout << "nam_2 : "; cin >> b;
+	cout << "computing : "; cin >> c;
 
-	while (true)
-	{
-		
-		cout << "\t \t \t \t MENU \t \t" << endl;
-		cout << "Enter :  \t 1 - Sum(+) \t 2 - difference(-)\t 3 - multiplication(*) \t 4 - division(/)" << endl;
-		string rr;
-		cin >> rr;  cout << endl;
-		if (rr.size() == 1) {
-			if (rr[0] == '1' || rr[0] == '2' || rr[0] == '3' || rr[0] == '4') {
-				int r = stoi(rr.c_str());
-				string snam_1;
-				string snam_2;
-				Big_numbers win;
-				
-				if (r == 1) {
-					cout << "First number : "; cin >> snam_1; cout << endl;
-					cout << "Second number : "; cin >> snam_2; cout << endl;
-					bool correct = win.creator(snam_1, snam_2);
-					if (correct == 1) {
-						win.sum();
-						win.print();
-					}
-				}
-				else if (r == 2) {
-					cout << "First number : "; cin >> snam_1; cout << endl;
-					cout << "Second number : "; cin >> snam_2; cout << endl;
-					bool correct = win.creator(snam_1, snam_2);
-					if (correct == 1) {
-						win.razn(0);
-						win.print();
-					}
-				}
-				else if (r == 3) {
-					cout << "First number : "; cin >> snam_1; cout << endl;
-					cout << "Second number : "; cin >> snam_2; cout << endl;
-					bool correct = win.creator(snam_1, snam_2);
-					if (correct == 1) {
-						win.ymn();
-						win.print();
-					}
-				}
-				else if (r == 4) {
-					cout << "First number : "; cin >> snam_1; cout << endl;
-					cout << "Second number : "; cin >> snam_2; cout << endl;
-					bool correct = win.creator(snam_1, snam_2);
-					if (correct == 1) {
-						win.del();
-						win.print();
-					}
-				}
-			}
-		}
-		if (cin.fail()) {
-			cin.clear();
-		}
-	}
+	win.creator(a, b);
+
+	win.sum();
+	win.print_answer();
+
+	win.razn();
+	win.print_answer();
+
+	win.ymn();
+	win.print_answer();
+
+	win.del();
+	win.print_answer();
+	
+	win.print_all();
+
+	win.computing(c);
+	win.print_all();
+
+	
 	return 0;
 }
