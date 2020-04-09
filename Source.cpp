@@ -13,7 +13,7 @@ private:
 	bool is_it_minus_2 = 0;                // имеет ли число 2 "-"
 	vector<int> nam_end;                   //число после арм. действий
 	bool is_it_minus_end = 0;             // имеет ли конечное число "-"
-	vector<int> ansver;
+	vector<int> answer;
 	bool is_it_minus_ansver = 0;
 	
 
@@ -169,10 +169,10 @@ private:
 		is_it_minus_end = 0;
 	}
 	void dell_answer() {
-		if (ansver.size() != 0) {
-			int ii = ansver.size();
+		if (answer.size() != 0) {
+			int ii = answer.size();
 			for (int i = 0; i < ii; i++) {
-				ansver.pop_back();
+				answer.pop_back();
 			}
 		}
 		is_it_minus_ansver = 0;
@@ -303,14 +303,14 @@ public:
 			}
 			cout << endl;
 		}
-		if (ansver.size() != 0) {
+		if (answer.size() != 0) {
 			cout << "answer: ";
 			if (is_it_minus_ansver == 1) {
 				cout << "-";
 
 			}
-			for (int i = ansver.size() - 1; i >= 0; i--) {
-				cout << ansver[i];
+			for (int i = answer.size() - 1; i >= 0; i--) {
+				cout << answer[i];
 			}
 			cout << endl;
 		}
@@ -578,7 +578,7 @@ public:
 
 			}
 			for (int i = 0; i < nam_end.size(); i++) {
-				ansver.push_back(nam_end[i]);
+				answer.push_back(nam_end[i]);
 			}
 			is_it_minus_ansver = is_it_minus_end;
 			dell_end();
@@ -608,11 +608,7 @@ public:
 					sum();
 					is_it_minus_2 = 0;
 				}
-				for (int i = 0; i < nam_end.size(); i++) {
-					ansver.push_back(nam_end[i]);
-				}
-				dell_end();
-				is_it_minus_ansver = is_it_minus_end;
+				
 
 		}
 	}
@@ -740,7 +736,7 @@ public:
 			}
 			
 			for (int i = 0; i < nam_end.size(); i++) {
-				ansver.push_back(nam_end[i]);
+				answer.push_back(nam_end[i]);
 			}
 			dell_end();
 			is_it_minus_ansver = is_it_minus_end;
@@ -825,8 +821,8 @@ public:
 						is_it_minus_1 = 0;
 						is_it_minus_2 = 1;
 						sum();
-						for (int i = 0; i < ansver.size(); i++) {
-							nam_end.push_back(ansver[i]);
+						for (int i = 0; i < answer.size(); i++) {
+							nam_end.push_back(answer[i]);
 						}
 						is_it_minus_end = is_it_minus_ansver;
 						dell_answer();
@@ -887,15 +883,15 @@ public:
 				nam_2.push_back(nam_2_0[i]);
 			}
 			for (int i = 0; i < nam_end.size(); i++) {
-				ansver.push_back(nam_end[i]);
+				answer.push_back(nam_end[i]);
 			}
 			is_it_minus_ansver = is_it_minus_end;
 			dell_end();
-			if (ansver.size() > 1) {
-				int ii = ansver.size();
+			if (answer.size() > 1) {
+				int ii = answer.size();
 				for (int i = ii - 1; i >= 0; i--) {
-					if (ansver[i] == 0) {
-						ansver.pop_back();
+					if (answer[i] == 0) {
+						answer.pop_back();
 					}
 					else
 						break;
@@ -907,13 +903,13 @@ public:
 	void print_answer() {
 		
 		
-		if (ansver.size() != 0) {
+		if (answer.size() != 0) {
 			cout << "Answer : ";
 			if (is_it_minus_ansver == 1) {
 				cout << "-";				
 			}
-			for (int i = ansver.size() - 1; i >= 0; i--) {
-				cout << ansver[i];
+			for (int i = answer.size() - 1; i >= 0; i--) {
+				cout << answer[i];
 			}
 			cout << endl;
 		}
@@ -986,33 +982,42 @@ public:
 
 
 int main() {
-	Big_numbers win;
-	string a;
-	string b;
-	string c;
-	cout << "nam_1 : "; cin >> a;
-	cout << "nam_2 : "; cin >> b;
-	cout << "computing : "; cin >> c;
+	while (1) {
+		Big_numbers win;
+		string a;
+		string b;
+		string c;
+		cout << "nam_1 : "; cin >> a;
+		cout << "nam_2 : "; cin >> b;
+		cout << "computing : "; cin >> c;
 
-	win.creator(a, b);
+		win.creator(a, b);
 
-	win.sum();
-	win.print_answer();
+		win.sum();
+		win.print_answer();
+		cout << endl;
 
-	//win.razn();
-	win.print_answer();
+		win.razn();
+		win.print_answer();
+		cout << endl;
 
-	win.ymn();
-	win.print_answer();
+		win.ymn();
+		win.print_answer();
+		cout << endl;
 
-	win.del();
-	win.print_answer();
-	
-	win.print_all();
+		win.del();
+		win.print_answer();
+		cout << endl;
 
-	win.computing(c);
-	win.print_all();
+		win.print_all();
+		cout << endl;
 
-	
+		win.computing(c);
+		win.print_all();
+		cout << endl;
+
+		win.dell_data();
+		win.print_all();
+	}
 	return 0;
 }
