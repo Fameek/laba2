@@ -156,6 +156,8 @@ private:
 				nam_2.pop_back();
 			}
 		}
+		is_it_minus_1 = 0;
+		is_it_minus_2 = 0;
 	}
 	void dell_end() {
 		if (nam_end.size() != 0) {
@@ -164,6 +166,7 @@ private:
 				nam_end.pop_back();
 			}
 		}
+		is_it_minus_end = 0;
 	}
 	void dell_answer() {
 		if (ansver.size() != 0) {
@@ -172,8 +175,18 @@ private:
 				ansver.pop_back();
 			}
 		}
+		is_it_minus_ansver = 0;
 	}
-	
+	//void zerroes_nam_2() {
+	//	int ii = nam_2.size();
+	//	for (int i = ii - 1; i >= 0; i++) {
+	//		if (nam_2[i] == 0) {
+	//			nam_2.pop_back();
+	//		}
+	//		else
+	//			break;
+	//	}
+	//}
 public:
 	
 	bool creator(string snam_1, string snam_2) { 
@@ -567,6 +580,7 @@ public:
 			for (int i = 0; i < nam_end.size(); i++) {
 				ansver.push_back(nam_end[i]);
 			}
+			is_it_minus_ansver = is_it_minus_end;
 			dell_end();
 			
 		}
@@ -598,7 +612,7 @@ public:
 					ansver.push_back(nam_end[i]);
 				}
 				dell_end();
-				
+				is_it_minus_ansver = is_it_minus_end;
 
 		}
 	}
@@ -729,7 +743,7 @@ public:
 				ansver.push_back(nam_end[i]);
 			}
 			dell_end();
-			
+			is_it_minus_ansver = is_it_minus_end;
 
 
 
@@ -814,9 +828,11 @@ public:
 						for (int i = 0; i < ansver.size(); i++) {
 							nam_end.push_back(ansver[i]);
 						}
-
+						is_it_minus_end = is_it_minus_ansver;
 						dell_answer();
+						//zerroes_nam_2();
 						int size_2 = nam_2.size();
+						
 						int size_1 = nam_1.size();
 						int size_end = nam_end.size();
 						if (is_it_minus_end == 0) {
@@ -873,16 +889,19 @@ public:
 			for (int i = 0; i < nam_end.size(); i++) {
 				ansver.push_back(nam_end[i]);
 			}
-			
+			is_it_minus_ansver = is_it_minus_end;
 			dell_end();
-			while (1) {
-				if (ansver[ansver.size() - 1] == 0) {
-					ansver.pop_back();
-				}
-				else {
-					break;
+			if (ansver.size() > 1) {
+				int ii = ansver.size();
+				for (int i = ii - 1; i >= 0; i--) {
+					if (ansver[i] == 0) {
+						ansver.pop_back();
+					}
+					else
+						break;
 				}
 			}
+			
 		}	
 	}
 	void print_answer() {
@@ -980,7 +999,7 @@ int main() {
 	win.sum();
 	win.print_answer();
 
-	win.razn();
+	//win.razn();
 	win.print_answer();
 
 	win.ymn();
