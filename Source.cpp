@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
-
+#include <time.h>
 
 using namespace std;
 
@@ -699,8 +699,9 @@ private:
 			for (int i = 0; i < nam_end.size(); i++) {
 				answer.push_back(nam_end[i]);
 			}
-			dell_end();
 			is_it_minus_ansver = is_it_minus_end;
+			dell_end();
+			
 
 
 
@@ -910,7 +911,8 @@ public:
 
 		}
 		else {
-			cout << "ERROR:incorrect numbers or the first character is 0";
+			
+			return input;
 		}
 
 
@@ -925,81 +927,163 @@ public:
 		string a = obj1.nam;
 		string b = obj2.nam;
 		Big_numbers r;
-		r.creator(a, b);
-		r.sum();
+		
+		if (obj1.nam.size() == 0 || obj2.nam.size() == 0) {
+			cout << "ERROR:incorrect numbers or the first character is 0"<< endl;
+			return r;
+		}
+		else
+		{
+			bool tt = r.creator(a, b);
+			if (tt == 1) {
+				r.sum();
 
-		string c;
-		if (r.is_it_minus_ansver == 1) {
-			c.push_back('-');
+				string c;
+				if (r.is_it_minus_ansver == 1) {
+					c.push_back('-');
+				}
+				for (int i = r.answer.size() - 1; i >= 0; i--) {
+					string rr = to_string(r.answer[i]);
+					c.push_back(rr[0]);
+				}
+				r.nam = c;
+				return r;
+			}
+			else {
+				cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			}
 		}
-		for (int i = r.answer.size() - 1; i >= 0; i--) {
-			string rr = to_string(r.answer[i]);
-				c.push_back(rr[0]);
-		}
-		r.nam = c;
-		return r;
 	}
 
 	friend Big_numbers operator-(Big_numbers obj1, Big_numbers obj2) {
 		string a = obj1.nam;
 		string b = obj2.nam;
 		Big_numbers r;
-		r.creator(a, b);
-		r.razn();
+		
+		if (obj1.nam.size() == 0 || obj2.nam.size() == 0) {
+			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			return r;
+		}
+		else {
+			bool tt = r.creator(a, b);
+			if (tt == 1) {
+				r.razn();
 
-		string c;
-		if (r.is_it_minus_ansver == 1) {
-			c.push_back('-');
+				string c;
+				if (r.is_it_minus_ansver == 1) {
+					c.push_back('-');
+				}
+				for (int i = r.answer.size() - 1; i >= 0; i--) {
+					string rr = to_string(r.answer[i]);
+					c.push_back(rr[0]);
+				}
+				r.nam = c;
+				return r;
+			}
+			else {
+				cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			}
 		}
-		for (int i = r.answer.size() - 1; i >= 0; i--) {
-			string rr = to_string(r.answer[i]);
-			c.push_back(rr[0]);
-		}
-		r.nam = c;
-		return r;
-	
 	}
 
 	friend Big_numbers operator*(Big_numbers obj1, Big_numbers obj2) {
 		string a = obj1.nam;
 		string b = obj2.nam;
 		Big_numbers r;
-		r.creator(a, b);
-		r.ymn();
+		
+		if (obj1.nam.size() == 0 || obj2.nam.size() == 0) {
+			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			return r;
+		}
+		else {
+			bool tt = r.creator(a, b);
+			if (tt == 1) {
+				r.ymn();
 
-		string c;
-		if (r.is_it_minus_ansver == 1) {
-			c.push_back('-');
+				string c;
+				if (r.is_it_minus_ansver == 1) {
+					c.push_back('-');
+				}
+				for (int i = r.answer.size() - 1; i >= 0; i--) {
+					string rr = to_string(r.answer[i]);
+					c.push_back(rr[0]);
+				}
+				r.nam = c;
+				return r;
+			}
+			else {
+				cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			}
 		}
-		for (int i = r.answer.size() - 1; i >= 0; i--) {
-			string rr = to_string(r.answer[i]);
-			c.push_back(rr[0]);
-		}
-		r.nam = c;
-		return r;
-	
 	
 	}
 	friend Big_numbers operator/(Big_numbers obj1, Big_numbers obj2) {
 		string a = obj1.nam;
 		string b = obj2.nam;
 		Big_numbers r;
-		r.creator(a, b);
-		r.del();
+		
+		if (obj1.nam.size() == 0 || obj2.nam.size() == 0) {
+			cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			return r;
+		}
+		else {
+			bool tt = r.creator(a, b);
+			if (tt == 1) {
+				r.del();
 
-		string c;
-		if (r.is_it_minus_ansver == 1) {
-			c.push_back('-');
+				string c;
+				if (r.is_it_minus_ansver == 1) {
+					c.push_back('-');
+				}
+				for (int i = r.answer.size() - 1; i >= 0; i--) {
+					string rr = to_string(r.answer[i]);
+					c.push_back(rr[0]);
+				}
+				r.nam = c;
+				return r;
+			}
+			else {
+				cout << "ERROR:incorrect numbers or the first character is 0" << endl;
+			}
 		}
-		for (int i = r.answer.size() - 1; i >= 0; i--) {
-			string rr = to_string(r.answer[i]);
-			c.push_back(rr[0]);
-		}
-		r.nam = c;
-		return r;
-	
 	}
 
+
+	void time_test(Big_numbers obj1, Big_numbers obj2) {
+		Big_numbers d;
+		double seconds;
+		time_t start, end;
+		time(&start);
+		d = obj1 + obj2;
+		time(&end);
+		seconds = difftime(end, start);
+		cout <<"time sum : " << seconds << endl;
+		d.dell_data();
+		/////////////////
+		time(&start);
+		d = obj1 - obj2;
+		time(&end);
+		seconds = difftime(end, start);
+		cout << "time difference :" << seconds << endl;
+		d.dell_data();
+		////////////
+		time(&start);
+		d = obj1 * obj2;
+		time(&end);
+		seconds = difftime(end, start);
+		cout << "time multiplication : " << seconds << endl;
+		d.dell_data();
+		/////////////
+		time(&start);
+		d = obj1 / obj2;
+		time(&end);
+		seconds = difftime(end, start);
+		cout << "time division : " << seconds << endl;
+		d.dell_data();
+		//////////
+
+
+	}
 };
 
 
@@ -1013,7 +1097,12 @@ public:
 int main() {
 	Big_numbers a;
 	Big_numbers b;
-	cin >> a >> b;
+	cin >> a;
+	cin	>> b;
+
+	a.time_test(a, b);
+	cout << endl;
+
 	cout << a + b << endl;
 	cout << a - b << endl;
 	cout << a * b << endl;
