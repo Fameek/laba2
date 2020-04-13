@@ -1057,28 +1057,28 @@ public:
 		d = obj1 + obj2;
 		time(&end);
 		seconds = difftime(end, start);
-		cout <<"time sum : " << seconds << endl;
+		cout <<"time sum : " << seconds << "c"<< endl;
 		d.dell_data();
 		/////////////////
 		time(&start);
 		d = obj1 - obj2;
 		time(&end);
 		seconds = difftime(end, start);
-		cout << "time difference :" << seconds << endl;
+		cout << "time difference :" << seconds << "c" << endl;
 		d.dell_data();
 		////////////
 		time(&start);
 		d = obj1 * obj2;
 		time(&end);
 		seconds = difftime(end, start);
-		cout << "time multiplication : " << seconds << endl;
+		cout << "time multiplication : " << seconds << "c" << endl;
 		d.dell_data();
 		/////////////
 		time(&start);
 		d = obj1 / obj2;
 		time(&end);
 		seconds = difftime(end, start);
-		cout << "time division : " << seconds << endl;
+		cout << "time division : " << seconds << "c" << endl;
 		d.dell_data();
 		//////////
 
