@@ -716,9 +716,11 @@ private:
 			bool minus = 0;
 			if (is_it_minus_1 == 1 && is_it_minus_2 == 0 || is_it_minus_1 == 0 && is_it_minus_2 == 1) {//решение вопроса с минусом
 				minus = 1;
+				
 			}
 			else if (is_it_minus_1 == 1 && is_it_minus_2 == 1 || is_it_minus_1 == 0 && is_it_minus_2 == 0) { // решение вопроса с минусом или плюсом
 				minus = 0;
+				
 			}
 			if (nam_2.size() == 1 && nam_2[0] == 1) { // деление на 1
 				for (int i = 0; i < nam_1.size(); i++) {
@@ -846,6 +848,12 @@ private:
 			}
 			for (int i = 0; i < nam_end.size(); i++) {
 				answer.push_back(nam_end[i]);
+			}
+			if (minus == 0) {
+				is_it_minus_end = 0;
+			}
+			else {
+				is_it_minus_end = 1;
 			}
 			is_it_minus_ansver = is_it_minus_end;
 			dell_end();
