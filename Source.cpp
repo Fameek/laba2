@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <time.h>
+#include <ctime>
 
 using namespace std;
 
@@ -1059,34 +1060,30 @@ public:
 
 	void time_test(Big_numbers obj1, Big_numbers obj2) {
 		Big_numbers d;
-		double seconds;
-		time_t start, end;
-		time(&start);
+		
+		clock_t time_1;	
+		time_1 = clock();
 		d = obj1 + obj2;
-		time(&end);
-		seconds = difftime(end, start);
-		cout <<"time sum : " << seconds << "c"<< endl;
+		time_1 = clock() - time_1;		
+		cout <<"time sum : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c"<< endl;
 		d.dell_data();
 		/////////////////
-		time(&start);
+		time_1 = clock();
 		d = obj1 - obj2;
-		time(&end);
-		seconds = difftime(end, start);
-		cout << "time difference :" << seconds << "c" << endl;
+		time_1 = clock() - time_1;
+		cout << "time difference : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c" << endl;
 		d.dell_data();
 		////////////
-		time(&start);
+		time_1 = clock();
 		d = obj1 * obj2;
-		time(&end);
-		seconds = difftime(end, start);
-		cout << "time multiplication : " << seconds << "c" << endl;
+		time_1 = clock() - time_1;
+		cout << "time multiplication : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c" << endl;
 		d.dell_data();
 		/////////////
-		time(&start);
+		time_1 = clock();
 		d = obj1 / obj2;
-		time(&end);
-		seconds = difftime(end, start);
-		cout << "time division : " << seconds << "c" << endl;
+		time_1 = clock() - time_1;
+		cout << "time division : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c" << endl;
 		d.dell_data();
 		//////////
 
