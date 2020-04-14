@@ -1058,32 +1058,48 @@ public:
 	}
 
 
-	void time_test(Big_numbers obj1, Big_numbers obj2) {
+	void time_test(Big_numbers obj1, Big_numbers obj2, int n) {
 		Big_numbers d;
-		
 		clock_t time_1;	
+		float tt;
 		time_1 = clock();
-		d = obj1 + obj2;
-		time_1 = clock() - time_1;		
-		cout <<"time sum : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c"<< endl;
+		for (int i = 0; i < n; i++) {
+			d = obj1 + obj2;
+		}
+		time_1 = clock() - time_1;	
+		tt = static_cast<float>(time_1) / CLOCKS_PER_SEC;
+		tt = tt / n;
+		cout <<"time sum : " << tt << "c"<< endl;
 		d.dell_data();
 		/////////////////
 		time_1 = clock();
-		d = obj1 - obj2;
+		for (int i = 0; i < n; i++) {
+			d = obj1 - obj2;
+		}
 		time_1 = clock() - time_1;
-		cout << "time difference : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c" << endl;
+		tt = static_cast<float>(time_1) / CLOCKS_PER_SEC;
+		tt = tt / n;
+		cout << "time difference : " << tt << "c" << endl;
 		d.dell_data();
 		////////////
 		time_1 = clock();
-		d = obj1 * obj2;
+		for (int i = 0; i < n; i++) {
+			d = obj1 * obj2;
+		}
 		time_1 = clock() - time_1;
-		cout << "time multiplication : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c" << endl;
+		tt = static_cast<float>(time_1) / CLOCKS_PER_SEC;
+		tt = tt / n;
+		cout << "time multiplication : " << tt << "c" << endl;
 		d.dell_data();
 		/////////////
 		time_1 = clock();
-		d = obj1 / obj2;
+		for (int i = 0; i < n; i++) {
+			d = obj1 / obj2;
+		}
 		time_1 = clock() - time_1;
-		cout << "time division : " << static_cast<float>(time_1) / CLOCKS_PER_SEC << "c" << endl;
+		tt = static_cast<float>(time_1) / CLOCKS_PER_SEC;
+		tt = tt / n;
+		cout << "time division : " << tt << "c" << endl;
 		d.dell_data();
 		//////////
 
@@ -1104,8 +1120,9 @@ int main() {
 	Big_numbers b;
 	cin >> a;
 	cin	>> b;
-
-	a.time_test(a, b);
+	int n;
+	cin >> n;
+	a.time_test(a, b, n);
 	cout << endl;
 
 	cout << a + b << endl;
